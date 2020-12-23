@@ -3,12 +3,6 @@
 	grid-template-rows: 100px 5fr;
 }
 
-.inputWrap {
-	display: grid;
-	grid-template-columns: 4fr 1fr;
-	align-items: flex-start;
-}
-
 .listWrap {
 	/* padding-top: 20px; */
 }
