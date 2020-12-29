@@ -1,4 +1,4 @@
-import { atom, atomFamily, useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
+import { atom, atomFamily, selector, selectorFamily, useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 
 export const todoIdsState = atom({
@@ -44,3 +44,11 @@ export const useAllTodos = () => {
 		[ids]
 	);
 };
+
+export const todoFilterSelector = selector({
+	key: uuidv4(),
+	get: ({ get }) => {
+		const ids = get(todoIdsState);
+		return ids.filter((id) => get(todoItemState(id)).isComplete);
+	},
+});

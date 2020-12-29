@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import classnames from 'classnames';
-import { todoItemState, useInsertItem, useAllTodos } from '../atoms';
+import { todoItemState, useInsertItem, useAllTodos, todoFilterSelector } from '../atoms';
 import { todoIdsState } from '../atoms/index';
 import styles from './index.module.css';
 
 const TodoRecoil = () => {
-	const snapshot = useAllTodos()();
-	console.log('--->snapshot', snapshot._store.getState());
-	snapshot.map((item) => {
-		console.log('item', item);
-	});
+	// const snapshot = useAllTodos()();
+	// console.log('--->snapshot', snapshot._store.getState());
+	// snapshot.map((item) => {
+	// 	console.log('item', item);
+	// });
+
+	const value = useRecoilValue(todoFilterSelector);
+	console.log(value);
+
 	return (
 		<>
 			<TodoAdd />
