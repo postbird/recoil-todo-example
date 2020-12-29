@@ -3,19 +3,14 @@ import { List, Checkbox, Input, Select } from 'antd';
 import classnames from 'classnames';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styles from './index.module.css';
-import {
-	todoListFilterSelector,
-	todoAtomWithId,
-	todoFilterAtom,
-	todoListAtom,
-} from './atoms/index';
+import { todoFilterAtom, todoIdsAtom, todoWithIdAtom } from './atoms/index';
 import TodoAdd from './mods/TodoAdd';
 import { TODO_FILTER } from '../../constants';
 import { SelectValue } from 'antd/lib/select';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 const TodoRecoil = () => {
-	const todoList = useRecoilValue(todoListFilterSelector);
+	const todoList = useRecoilValue(todoIdsAtom);
 
 	return (
 		<div className={styles.wrap}>
@@ -26,18 +21,15 @@ const TodoRecoil = () => {
 				footer={<div>Footer</div>}
 				bordered
 				dataSource={todoList}
-				renderItem={item => <TodoItem key={item.id} id={item.id} />}
+				renderItem={id => <TodoItem key={id} id={id} />}
 			/>
 		</div>
 	);
 };
 
 const TodoItem: React.FC<{ id: string }> = ({ id }) => {
-	const [todo, setTodo] = useRecoilState(todoAtomWithId(id));
+	const [todo, setTodo] = useRecoilState(todoWithIdAtom(id));
 	const [editable, setEditable] = useState(false);
-	const todoList = useRecoilValue(todoListAtom);
-	console.log('todoList', todoList);
-	console.log('todo', todo);
 
 	const handleCheckboxChange = (ev: CheckboxChangeEvent) => {
 		setTodo({ ...todo, completed: ev.target.checked });
@@ -60,6 +52,10 @@ const TodoItem: React.FC<{ id: string }> = ({ id }) => {
 			setEditable(false);
 		}
 	};
+
+	if (!todo) {
+		return null;
+	}
 
 	return (
 		<List.Item className={styles.listItem}>

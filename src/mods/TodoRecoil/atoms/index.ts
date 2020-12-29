@@ -1,18 +1,8 @@
-import { useCallback } from 'react';
-import {
-	atom,
-	atomFamily,
-	selectorFamily,
-	RecoilState,
-	selector,
-	ReadOnlySelectorOptions,
-	useRecoilCallback,
-	useRecoilState,
-} from 'recoil';
+import { atom, atomFamily, RecoilState, useRecoilCallback, useRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import { TODO_FILTER } from '../../../constants';
 
-export type TodoId = string | number;
+export type TodoId = string;
 
 export interface ITodo {
 	id: TodoId;
@@ -24,27 +14,36 @@ export interface ITodo {
 
 export type TodoIds = TodoId[];
 
-export const generateTodo = (title: string) => ({
+export const generateTodo = (title: string, id: TodoId): ITodo => ({
+	id,
 	title,
 	completed: false,
 	deleted: false,
 	created: +new Date(),
 });
 
-export const todoIDsAtom: RecoilState<TodoIds> = atom({
-	key: 'todoIDsAtom',
+export const todoIdsAtom: RecoilState<TodoIds> = atom({
+	key: 'todoIdsAtom',
 	default: [] as TodoIds,
 });
 
 export const todoWithIdAtom = atomFamily({
 	key: `todoItemFamily`,
-	default: null,
+	default: (null as unknown) as RecoilState<ITodo>,
 });
 
-export const useInsertAtom = useRecoilCallback(({ set }) => (title: string) => {
-	const id = uuidv4();
-	set(todoWithIdAtom(id), generateTodo(title));
-});
+export const useInsertAtom = () => {
+	const [ids, setIds] = useRecoilState(todoIdsAtom);
+	return useRecoilCallback(
+		({ set }) => (title: string) => {
+			const id = uuidv4();
+			setIds([...ids, id]);
+			console.log(todoWithIdAtom(id));
+			set(todoWithIdAtom(id), generateTodo(title, id));
+		},
+		[ids]
+	);
+};
 
 export const todoFilterAtom = atom({
 	key: 'todoFilterAtom',
