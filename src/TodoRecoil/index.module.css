@@ -1,0 +1,15 @@
+.todoItem {
+	cursor: pointer;
+	margin-top: 10px;
+	color: #fff;
+	font-size: 1.4rem;
+}
+
+.todoItemInput {
+	color: #333;
+	font-size: 1.4rem;
+}
+
+.todoItemCompleted {
+	text-decoration: line-through;
+}
