@@ -3,10 +3,9 @@ import { List, Checkbox, Input, Select } from 'antd';
 import classnames from 'classnames';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styles from './index.module.css';
-import { todoFilterAtom, todoIdsAtom, todoWithIdAtom } from './atoms/index';
+import { todoFilterAtom, todoWithIdAtom, todoListFilterSelector, todoIdsAtom } from './atoms/index';
 import TodoAdd from './mods/TodoAdd';
 import { TODO_FILTER } from '../../constants';
-import { SelectValue } from 'antd/lib/select';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 
 const TodoRecoil = () => {
