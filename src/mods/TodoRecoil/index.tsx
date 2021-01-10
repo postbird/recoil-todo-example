@@ -1,6 +1,6 @@
-import React from 'react';
-import { List, Select, Row, Col } from 'antd';
-import { useRecoilState } from 'recoil';
+import React, { useState, useEffect } from 'react';
+import { List, Select, Row, Col, Button } from 'antd';
+import { useRecoilSnapshot, useRecoilState, Snapshot, useGotoRecoilSnapshot } from 'recoil';
 import styles from './index.module.css';
 import { todoFilterState } from './atoms/index';
 import { useFilterTodos, useTodoStats } from './hooks/todo';
@@ -10,20 +10,31 @@ import TodoItem from './mods/TodoItem';
 
 const TodoRecoil = () => {
 	const todoList = useFilterTodos();
-
+	const snapshot = useRecoilSnapshot();
+	console.log('snapshot', snapshot);
+	const loadable = snapshot.getLoadable(todoFilterState);
+	console.log('loadable', loadable);
+	console.log(snapshot.map(item => console.log('item', item)));
 	return (
-		<div className={styles.wrap}>
-			<TodoAdd />
-			<ListStats />
-			<List
-				size="large"
-				header={<ListHeader />}
-				footer={<div>Footer</div>}
-				bordered
-				dataSource={todoList}
-				renderItem={id => <TodoItem key={id} id={id} />}
-			/>
-		</div>
+		<Row>
+			<Col span={10}>
+				<TimeTravelObserver />
+			</Col>
+			<Col span={14}>
+				<div className={styles.wrap}>
+					<TodoAdd />
+					<ListStats />
+					<List
+						size="large"
+						header={<ListHeader />}
+						footer={<div>Footer</div>}
+						bordered
+						dataSource={todoList}
+						renderItem={id => <TodoItem key={id} id={id} />}
+					/>
+				</div>
+			</Col>
+		</Row>
 	);
 };
 
@@ -59,3 +70,30 @@ const ListHeader: React.FC = () => {
 };
 
 export default TodoRecoil;
+
+function TimeTravelObserver() {
+	const [snapshots, setSnapshots] = useState([] as Snapshot[]);
+
+	const snapshot = useRecoilSnapshot();
+
+	useEffect(() => {
+		if (snapshots.every((s: Snapshot) => s.getID() !== snapshot.getID())) {
+			setSnapshots([...snapshots, snapshot]);
+		}
+	}, [snapshot]);
+
+	const gotoSnapshot = useGotoRecoilSnapshot();
+
+	return (
+		<ol>
+			{snapshots.map((snapshot, i) => (
+				<li key={i}>
+					Snapshot {i}
+					<Button onClick={() => gotoSnapshot(snapshot)} style={{ marginLeft: 10 }}>
+						Restore
+					</Button>
+				</li>
+			))}
+		</ol>
+	);
+}
