@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
 import { Input, Button } from 'antd';
 import styles from './index.module.css';
-import { useInsertAtom } from '../../atoms';
+import { useAddTodo } from '../../hooks/todo';
 
 const TodoAdd = () => {
 	const [input, setInput] = useState('');
-	const addTodo = useInsertAtom();
+	const addTodo = useAddTodo();
 
 	const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
 		setInput(ev.target.value);

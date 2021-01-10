@@ -1,0 +1,7 @@
+.listItem {
+	padding: 10px 12px;
+}
+
+.listItemCompleted {
+	text-decoration: line-through;
+}

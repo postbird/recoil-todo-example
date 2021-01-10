@@ -30,12 +30,12 @@ export const generateTodo = (title: string, id: TodoId): ITodo => ({
 	created: +new Date(),
 });
 
-export const todoIdsAtom: RecoilState<TodoIds> = atom({
-	key: 'todoIdsAtom',
+export const todoIdsState: RecoilState<TodoIds> = atom({
+	key: 'todoIdsState',
 	default: [] as TodoIds,
 });
 
-export const todoWithIdAtom = atomFamily({
+export const todoIdState = atomFamily({
 	key: `todoItemFamily`,
 	default: (null as unknown) as RecoilState<ITodo>,
 });
@@ -49,9 +49,9 @@ export const todoListFilterSelector = selector({
 	key: 'todoListFilterSelector',
 	get: ({ get }) => {
 		const filter = get(todoFilterAtom);
-		const todoIds = get(todoIdsAtom);
+		const todoIds = get(todoIdsState);
 		return todoIds.filter(id => {
-			const todo = get(todoWithIdAtom(id));
+			const todo = get(todoIdState(id));
 			console.log('todo', todo);
 			switch (filter) {
 				case TODO_FILTER.ACTIVE:
@@ -67,12 +67,12 @@ export const todoListFilterSelector = selector({
 
 //***  hooks ****/
 export const useInsertAtom = () => {
-	const [ids, setIds] = useRecoilState(todoIdsAtom);
+	const [ids, setIds] = useRecoilState(todoIdsState);
 	return useRecoilCallback(
 		({ set }) => (title: string) => {
 			const id = uuidv4();
 			setIds(ids => [...ids, id]);
-			set(todoWithIdAtom(id), generateTodo(title, id));
+			set(todoIdState(id), generateTodo(title, id));
 		},
 		[ids]
 	);

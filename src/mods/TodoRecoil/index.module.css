@@ -3,14 +3,6 @@
 	grid-template-rows: 100px 5fr;
 }
 
-.listItem {
-	padding: 10px 12px;
-}
-
-.listItemCompleted {
-	text-decoration: line-through;
-}
-
 .header {
 	display: flex;
 	flex-direction: row;

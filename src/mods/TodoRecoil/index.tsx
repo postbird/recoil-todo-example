@@ -1,15 +1,14 @@
-import React, { ChangeEvent, useMemo, useState, KeyboardEvent } from 'react';
-import { List, Checkbox, Input, Select } from 'antd';
-import classnames from 'classnames';
+import React from 'react';
+import { List, Select } from 'antd';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styles from './index.module.css';
-import { todoFilterAtom, todoWithIdAtom, todoListFilterSelector, todoIdsAtom } from './atoms/index';
-import TodoAdd from './mods/TodoAdd';
+import { todoFilterAtom, todoIdsState } from './atoms/index';
 import { TODO_FILTER } from '../../constants';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
+import TodoAdd from './mods/TodoAdd';
+import TodoItem from './mods/TodoItem';
 
 const TodoRecoil = () => {
-	const todoList = useRecoilValue(todoIdsAtom);
+	const todoList = useRecoilValue(todoIdsState);
 
 	return (
 		<div className={styles.wrap}>
@@ -23,57 +22,6 @@ const TodoRecoil = () => {
 				renderItem={id => <TodoItem key={id} id={id} />}
 			/>
 		</div>
-	);
-};
-
-const TodoItem: React.FC<{ id: string }> = ({ id }) => {
-	const [todo, setTodo] = useRecoilState(todoWithIdAtom(id));
-	const [editable, setEditable] = useState(false);
-
-	const handleCheckboxChange = (ev: CheckboxChangeEvent) => {
-		setTodo({ ...todo, completed: ev.target.checked });
-	};
-
-	const handleTitleClick = () => {
-		setEditable(!editable);
-	};
-
-	const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
-		setTodo({ ...todo, title: ev.target.value });
-	};
-
-	const handleInputBlur = () => {
-		setEditable(false);
-	};
-
-	const handleInputOnKeyDown = (ev: KeyboardEvent<HTMLInputElement>) => {
-		if (ev.key === 'Enter') {
-			setEditable(false);
-		}
-	};
-
-	if (!todo) {
-		return null;
-	}
-
-	return (
-		<List.Item className={styles.listItem}>
-			{editable ? (
-				<Input
-					value={todo.title}
-					onChange={handleInputChange}
-					onBlur={handleInputBlur}
-					onKeyDown={handleInputOnKeyDown}
-				/>
-			) : (
-				<span
-					className={classnames({ [styles.listItemCompleted]: todo.completed })}
-					onClick={handleTitleClick}>
-					{todo.title}
-				</span>
-			)}
-			<Checkbox checked={todo.completed} onChange={handleCheckboxChange} />
-		</List.Item>
 	);
 };
 
