@@ -6,7 +6,7 @@ import styles from './index.module.css';
 import {
 	todoListFilterSelector,
 	todoAtomWithId,
-	todoFilterAtom,
+	todoFilterState,
 	todoListAtom,
 } from './atoms/index';
 import TodoAdd from './mods/TodoAdd';
@@ -83,7 +83,7 @@ const TodoItem: React.FC<{ id: string }> = ({ id }) => {
 };
 
 const ListHeader: React.FC = () => {
-	const [todoFilter, setTodoFilter] = useRecoilState(todoFilterAtom);
+	const [todoFilter, setTodoFilter] = useRecoilState(todoFilterState);
 
 	const handleChange = (value: string) => {
 		setTodoFilter(value);

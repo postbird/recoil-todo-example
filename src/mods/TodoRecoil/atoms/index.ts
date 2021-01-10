@@ -1,13 +1,4 @@
-import {
-	atom,
-	atomFamily,
-	RecoilState,
-	useRecoilCallback,
-	useRecoilState,
-	selector,
-	useRecoilValue,
-} from 'recoil';
-import { v4 as uuidv4 } from 'uuid';
+import { atom, atomFamily, RecoilState, selector } from 'recoil';
 import { TODO_FILTER } from '../../../constants';
 
 export type TodoId = string;
@@ -40,40 +31,39 @@ export const todoIdState = atomFamily({
 	default: (null as unknown) as RecoilState<ITodo>,
 });
 
-export const todoFilterAtom = atom({
-	key: 'todoFilterAtom',
+export const todoFilterState = atom({
+	key: 'todoFilterState',
 	default: TODO_FILTER.ALL,
 });
 
-export const todoListFilterSelector = selector({
-	key: 'todoListFilterSelector',
+export const todoListStatsSelector = selector({
+	key: 'todoListStatsSelector',
 	get: ({ get }) => {
-		const filter = get(todoFilterAtom);
-		const todoIds = get(todoIdsState);
-		return todoIds.filter(id => {
-			const todo = get(todoIdState(id));
-			console.log('todo', todo);
-			switch (filter) {
-				case TODO_FILTER.ACTIVE:
-					return !todo.completed;
-				case TODO_FILTER.COMPLETED:
-					return todo.completed;
-				default:
-					return true;
-			}
-		});
+		const ids = get(todoIdsState);
+		const all = ids.length;
+		const active = ids.filter(id => !get(todoIdState(id)).completed).length;
+		const completed = ids.filter(id => get(todoIdState(id)).completed).length;
+		return {
+			all,
+			active,
+			completed,
+			percent: all === 0 ? 0 : `${Math.floor(completed / all)}%`,
+		};
 	},
 });
 
-//***  hooks ****/
-export const useInsertAtom = () => {
-	const [ids, setIds] = useRecoilState(todoIdsState);
-	return useRecoilCallback(
-		({ set }) => (title: string) => {
-			const id = uuidv4();
-			setIds(ids => [...ids, id]);
-			set(todoIdState(id), generateTodo(title, id));
-		},
-		[ids]
-	);
-};
+export const todoIdsFilterSelector = selector({
+	key: 'todoListFilterSelector',
+	get: ({ get }) => {
+		const filter = get(todoFilterState);
+		const todoIds = get(todoIdsState);
+		switch (filter) {
+			case TODO_FILTER.COMPLETED:
+				return todoIds.filter(todoId => get(todoIdState(todoId)).completed);
+			case TODO_FILTER.ACTIVE:
+				return todoIds.filter(todoId => !get(todoIdState(todoId)).completed);
+			default:
+				return todoIds;
+		}
+	},
+});

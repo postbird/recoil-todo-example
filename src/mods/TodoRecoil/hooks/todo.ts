@@ -1,6 +1,13 @@
 import { v4 as uuidv4 } from 'uuid';
-import { useRecoilState, useRecoilCallback } from 'recoil';
-import { todoIdsState, todoIdState, generateTodo, TodoId } from '../atoms';
+import { useRecoilState, useRecoilCallback, useRecoilValue } from 'recoil';
+import {
+	todoIdsState,
+	todoIdState,
+	generateTodo,
+	TodoId,
+	todoIdsFilterSelector,
+	todoListStatsSelector,
+} from '../atoms';
 
 export const useAddTodo = () => {
 	const [ids, setIds] = useRecoilState(todoIdsState);
@@ -29,6 +36,10 @@ export const useTodo = (id: TodoId) => {
 
 export const useTodos = () => {};
 
-export const useFilterTodoIds = () => {
-	// const
+export const useFilterTodos = () => {
+	return useRecoilValue(todoIdsFilterSelector);
+};
+
+export const useTodoStats = () => {
+	return useRecoilValue(todoListStatsSelector);
 };

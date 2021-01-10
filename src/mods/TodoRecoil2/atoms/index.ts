@@ -47,15 +47,15 @@ export const todoAtomWithId = atomFamily({
 	default: (id: string) => todoItemSelectorWithId(id),
 });
 
-export const todoFilterAtom = atom({
-	key: 'todoFilterAtom',
+export const todoFilterState = atom({
+	key: 'todoFilterState',
 	default: TODO_FILTER.ALL,
 });
 
 export const todoListFilterSelector = selector({
 	key: 'todoListFilterSelector',
 	get: ({ get }) => {
-		const filter = get(todoFilterAtom);
+		const filter = get(todoFilterState);
 		const todoList = get(todoListAtom);
 		console.log(todoList);
 

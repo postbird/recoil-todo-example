@@ -1,6 +1,6 @@
 .wrap {
 	display: grid;
-	grid-template-rows: 100px 5fr;
+	grid-template-rows: 50px 50px 5fr;
 }
 
 .header {

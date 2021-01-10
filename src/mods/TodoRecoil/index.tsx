@@ -1,18 +1,20 @@
 import React from 'react';
-import { List, Select } from 'antd';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { List, Select, Row, Col } from 'antd';
+import { useRecoilState } from 'recoil';
 import styles from './index.module.css';
-import { todoFilterAtom, todoIdsState } from './atoms/index';
+import { todoFilterState } from './atoms/index';
+import { useFilterTodos, useTodoStats } from './hooks/todo';
 import { TODO_FILTER } from '../../constants';
 import TodoAdd from './mods/TodoAdd';
 import TodoItem from './mods/TodoItem';
 
 const TodoRecoil = () => {
-	const todoList = useRecoilValue(todoIdsState);
+	const todoList = useFilterTodos();
 
 	return (
 		<div className={styles.wrap}>
 			<TodoAdd />
+			<ListStats />
 			<List
 				size="large"
 				header={<ListHeader />}
@@ -25,8 +27,21 @@ const TodoRecoil = () => {
 	);
 };
 
+const ListStats: React.FC = () => {
+	const { all, active, completed, percent } = useTodoStats();
+
+	return (
+		<Row>
+			<Col span={6}>all: {all}</Col>
+			<Col span={6}>active: {active}</Col>
+			<Col span={6}>completed: {completed}</Col>
+			<Col span={6}>percent: {percent}</Col>
+		</Row>
+	);
+};
+
 const ListHeader: React.FC = () => {
-	const [todoFilter, setTodoFilter] = useRecoilState(todoFilterAtom);
+	const [todoFilter, setTodoFilter] = useRecoilState(todoFilterState);
 
 	const handleChange = (value: string) => {
 		setTodoFilter(value);
