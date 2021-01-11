@@ -1,5 +1,4 @@
 import { atom, atomFamily, RecoilState, selector } from 'recoil';
-import { TODO_FILTER } from '../../../constants';
 
 export type TodoId = string;
 
@@ -31,11 +30,6 @@ export const todoIdState = atomFamily({
 	default: (null as unknown) as RecoilState<ITodo>,
 });
 
-export const todoFilterState = atom({
-	key: 'todoFilterState',
-	default: TODO_FILTER.ALL,
-});
-
 export const todoListStatsSelector = selector({
 	key: 'todoListStatsSelector',
 	get: ({ get }) => {
@@ -49,21 +43,5 @@ export const todoListStatsSelector = selector({
 			completed,
 			percent: all === 0 ? 0 : `${Math.floor(completed / all)}%`,
 		};
-	},
-});
-
-export const todoIdsFilterSelector = selector({
-	key: 'todoListFilterSelector',
-	get: ({ get }) => {
-		const filter = get(todoFilterState);
-		const todoIds = get(todoIdsState);
-		switch (filter) {
-			case TODO_FILTER.COMPLETED:
-				return todoIds.filter(todoId => get(todoIdState(todoId)).completed);
-			case TODO_FILTER.ACTIVE:
-				return todoIds.filter(todoId => !get(todoIdState(todoId)).completed);
-			default:
-				return todoIds;
-		}
 	},
 });

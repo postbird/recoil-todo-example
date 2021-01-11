@@ -3,8 +3,15 @@
 	grid-template-rows: 50px 50px 5fr;
 }
 
-.header {
+.statsWrap {
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-end;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.statsItem {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }

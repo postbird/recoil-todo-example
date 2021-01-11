@@ -1,7 +1,15 @@
 .listItem {
-	padding: 10px 12px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
 }
 
-.listItemCompleted {
+.input {
 	text-decoration: line-through;
+}
+
+.checkbox {
+	display: flex;
+	justify-content: flex-end;
+	width: 60px;
 }
