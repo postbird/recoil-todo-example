@@ -27,7 +27,7 @@ export const useTodo = (id: TodoId) => {
 	};
 };
 
-export const useTodos = () => {
+export const useTodoIds = () => {
 	return useRecoilValue(todoIdsState);
 };
 
