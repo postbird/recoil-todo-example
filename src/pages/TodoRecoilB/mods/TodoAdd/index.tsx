@@ -1,12 +1,11 @@
-import React, { ChangeEvent, useMemo, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import React, { ChangeEvent, useState } from 'react';
 import { Input, Button } from 'antd';
 import styles from './index.module.css';
-import { todoListAtom, generateTodo } from '../../atoms';
+import { useAddTodo } from '../../hooks/todo';
 
 const TodoAdd = () => {
 	const [input, setInput] = useState('');
-	const [todoList, setTodoList] = useRecoilState(todoListAtom);
+	const addTodo = useAddTodo();
 
 	const handleInputChange = (ev: ChangeEvent<HTMLInputElement>) => {
 		setInput(ev.target.value);
@@ -14,8 +13,8 @@ const TodoAdd = () => {
 
 	const handleAddClick = () => {
 		if (input?.length > 0) {
-			const todo = generateTodo(input);
-			setTodoList(todoList.concat(todo));
+			addTodo(input);
+			setInput('');
 		}
 	};
 	return (

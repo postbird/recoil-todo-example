@@ -1,0 +1,17 @@
+.wrap {
+	margin-left: 2%;
+	margin-top: 2%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.input {
+	align-content: center;
+	justify-content: center;
+}
+
+.display {
+	display: flex;
+	flex-direction: column;
+}

@@ -1,0 +1,21 @@
+.wrap {
+	display: grid;
+	grid-template-rows: 50px 50px 5fr;
+	height: 100vh;
+	overflow: auto;
+	padding: 20px;
+	background-color: #fff;
+}
+
+.statsWrap {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.statsItem {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}

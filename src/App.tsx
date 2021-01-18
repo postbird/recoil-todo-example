@@ -2,9 +2,10 @@ import React from 'react';
 import { RecoilRoot } from 'recoil';
 import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-// import styles from './App.module.css';
+import styles from './App.module.css';
 import RecoilCounter from './pages/RecoilCounter';
-import TodoRecoil from './pages/TodoRecoil';
+import RecoilTodoA from './pages/TodoRecoilA';
+import RecoilTodoB from './pages/TodoRecoilB';
 
 const App = () => {
 	return (
@@ -15,8 +16,6 @@ const App = () => {
 						style={{
 							overflow: 'auto',
 							height: '100vh',
-							position: 'fixed',
-							left: 0,
 						}}>
 						<Menu theme="dark" mode="inline">
 							<Menu.Item key="home">
@@ -25,17 +24,27 @@ const App = () => {
 							<Menu.Item key="recoilCounter">
 								<Link to="/recoilCounter">RecoilCounter</Link>
 							</Menu.Item>
+							<Menu.Item key="recoilTodo">
+								<Link to="/recoilTodo">RecoilCounter</Link>
+							</Menu.Item>
 						</Menu>
 					</Layout.Sider>
-					<Layout.Content>
+					<Layout.Content
+						style={{
+							overflow: 'auto',
+							height: '100vh',
+						}}>
 						<Switch>
-							<Route path="/"></Route>
-							<Route path="/recoilCounter">
+							<Route path="/recoilCounter" exact>
 								<RecoilCounter />
 							</Route>
-							<Route path="/recoilCounter">
-								<RecoilCounter />
+							<Route path="/recoilTodo" exact>
+								<div className={styles.gridWrap}>
+									<RecoilTodoA />
+									<RecoilTodoB />
+								</div>
 							</Route>
+							<Route path="/" exact></Route>
 						</Switch>
 					</Layout.Content>
 				</Layout>

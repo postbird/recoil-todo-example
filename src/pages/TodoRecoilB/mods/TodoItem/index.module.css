@@ -1,0 +1,15 @@
+.listItem {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.input {
+	text-decoration: line-through;
+}
+
+.checkbox {
+	display: flex;
+	justify-content: flex-end;
+	width: 60px;
+}
