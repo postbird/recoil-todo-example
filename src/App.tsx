@@ -3,9 +3,7 @@ import { RecoilRoot } from 'recoil';
 import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import styles from './App.module.css';
-import RecoilCounter from './pages/RecoilCounter';
-import RecoilTodoA from './pages/TodoRecoilA';
-import RecoilTodoB from './pages/TodoRecoilB';
+import DemoCounter from './pages/DemoCounter/';
 
 const App = () => {
 	return (
@@ -36,13 +34,10 @@ const App = () => {
 						}}>
 						<Switch>
 							<Route path="/recoilCounter" exact>
-								<RecoilCounter />
+								<DemoCounter />
 							</Route>
 							<Route path="/recoilTodo" exact>
-								<div className={styles.gridWrap}>
-									<RecoilTodoA />
-									<RecoilTodoB />
-								</div>
+								<div className={styles.gridWrap}></div>
 							</Route>
 							<Route path="/" exact></Route>
 						</Switch>

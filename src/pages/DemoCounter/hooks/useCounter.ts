@@ -1,5 +1,5 @@
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { numState, numMultiSelector, numAbsSelector } from './../atoms/index';
+import { numState, numMultiSelector, numAbsSelector } from '../atoms/index';
 
 const useCounter = () => {
 	const [num, setNum] = useRecoilState(numState);
