@@ -10,10 +10,10 @@ const DemoCounter = () => {
 			<Col span={8}>
 				<Counter />
 			</Col>
-			<Col span={8}>
+			<Col span={4}>
 				<RecoilCounter />
 			</Col>
-			<Col span={8}>
+			<Col span={4}>
 				<CounterModify />
 			</Col>
 		</Row>

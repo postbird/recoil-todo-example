@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, InputNumber, List, Statistic } from 'antd';
+import { Button, InputNumber, Statistic } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import useCounter from '../../hooks/useCounter';
 import styles from './index.module.css';
