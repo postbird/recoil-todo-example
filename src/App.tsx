@@ -4,6 +4,7 @@ import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import styles from './App.module.css';
 import DemoCounter from './pages/DemoCounter/';
+import DemoTodo from './pages/DemoTodo/';
 
 const App = () => {
 	return (
@@ -20,10 +21,10 @@ const App = () => {
 								<Link to="/">Home</Link>
 							</Menu.Item>
 							<Menu.Item key="recoilCounter">
-								<Link to="/recoilCounter">RecoilCounter</Link>
+								<Link to="/recoilCounter">Demo Counter</Link>
 							</Menu.Item>
 							<Menu.Item key="recoilTodo">
-								<Link to="/recoilTodo">RecoilCounter</Link>
+								<Link to="/recoilTodo">Demo Todo</Link>
 							</Menu.Item>
 						</Menu>
 					</Layout.Sider>
@@ -37,7 +38,7 @@ const App = () => {
 								<DemoCounter />
 							</Route>
 							<Route path="/recoilTodo" exact>
-								<div className={styles.gridWrap}></div>
+								<DemoTodo />
 							</Route>
 							<Route path="/" exact></Route>
 						</Switch>

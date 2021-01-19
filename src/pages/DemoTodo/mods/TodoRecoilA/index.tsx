@@ -1,12 +1,12 @@
 import React from 'react';
 import { List, Badge } from 'antd';
 import styles from './index.module.css';
-import { useTodoStats, useTodoIds } from './hooks/todo';
+import { useTodoStats, useTodos } from './hooks/todo';
 import TodoAdd from './mods/TodoAdd';
 import TodoItem from './mods/TodoItem';
 
 const TodoRecoil = () => {
-	const todoList = useTodoIds();
+	const [todoList] = useTodos();
 	return (
 		<div className={styles.wrap}>
 			<TodoAdd />
@@ -14,7 +14,7 @@ const TodoRecoil = () => {
 				size="large"
 				header={<ListStats />}
 				dataSource={todoList}
-				renderItem={id => <TodoItem key={id} id={id} />}
+				renderItem={todo => <TodoItem key={todo.id} id={todo.id} />}
 			/>
 		</div>
 	);
