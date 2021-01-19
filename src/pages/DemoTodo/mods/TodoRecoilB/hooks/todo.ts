@@ -1,6 +1,14 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useRecoilState, useRecoilCallback, useRecoilValue } from 'recoil';
-import { todoIdsState, todoIdState, generateTodo, TodoId, todoListStatsSelector } from '../atoms';
+import { todoIdsState, todoIdState, TodoId, todoListStatsSelector, ITodo } from '../atoms';
+
+const generateTodo = (title: string, id: TodoId): ITodo => ({
+	id,
+	title,
+	completed: false,
+	deleted: false,
+	created: +new Date(),
+});
 
 export const useAddTodo = () => {
 	const [ids, setIds] = useRecoilState(todoIdsState);

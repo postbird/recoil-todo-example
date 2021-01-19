@@ -12,14 +12,6 @@ export interface ITodo {
 
 export type TodoIds = TodoId[];
 
-export const generateTodo = (title: string, id: TodoId): ITodo => ({
-	id,
-	title,
-	completed: false,
-	deleted: false,
-	created: +new Date(),
-});
-
 export const todoIdsState: RecoilState<TodoIds> = atom({
 	key: 'todoIdsState',
 	default: [] as TodoIds,

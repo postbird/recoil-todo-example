@@ -10,10 +10,10 @@ const TodoRecoil = () => {
 	return (
 		<div className={styles.wrap}>
 			<TodoAdd />
+			<ListStats />
 			<List
 				size="large"
 				bordered
-				header={<ListStats />}
 				dataSource={todoList}
 				renderItem={id => <TodoItem key={id} id={id} />}
 			/>
