@@ -1,4 +1,5 @@
 import { atom, selector } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 
 export type TodoId = string;
 
@@ -13,12 +14,12 @@ export interface ITodo {
 export type TodoList = ITodo[];
 
 export const todosState = atom({
-	key: 'todos',
+	key: uuidv4(),
 	default: [] as TodoList,
 });
 
 export const todoListStatsSelector = selector({
-	key: 'todoListStatsSelector',
+	key: uuidv4(),
 	get: ({ get }) => {
 		const todos = get(todosState);
 		const all = todos.length;

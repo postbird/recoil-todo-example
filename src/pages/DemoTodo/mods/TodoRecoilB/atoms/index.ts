@@ -1,4 +1,4 @@
-import { atom, atomFamily, RecoilState, selector } from 'recoil';
+import { atom, atomFamily, RecoilState, selector, selectorFamily } from 'recoil';
 
 export type TodoId = string;
 
@@ -20,6 +20,17 @@ export const todoIdsState: RecoilState<TodoIds> = atom({
 export const todoIdState = atomFamily({
 	key: `todoItemFamily`,
 	default: (null as unknown) as RecoilState<ITodo>,
+});
+
+export const todoListActiveSelector = selectorFamily({
+	key: 'todoListActiveSelector',
+	get: type => ({ get }) => {
+		const ids = get(todoIdsState);
+		if (type === 'all') {
+			return ids.length;
+		}
+		return ids.filter(id => !get(todoIdState(id)).completed).length;
+	},
 });
 
 export const todoListStatsSelector = selector({

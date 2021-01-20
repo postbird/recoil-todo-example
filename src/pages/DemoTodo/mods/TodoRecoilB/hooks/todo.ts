@@ -1,6 +1,8 @@
+import { todoListActiveSelector } from './../atoms/index';
 import { v4 as uuidv4 } from 'uuid';
 import { useRecoilState, useRecoilCallback, useRecoilValue } from 'recoil';
 import { todoIdsState, todoIdState, TodoId, todoListStatsSelector, ITodo } from '../atoms';
+import { useMemo } from 'react';
 
 const generateTodo = (title: string, id: TodoId): ITodo => ({
 	id,
@@ -42,3 +44,17 @@ export const useTodoIds = () => {
 export const useTodoStats = () => {
 	return useRecoilValue(todoListStatsSelector);
 };
+
+// export const useTodoStats = () => {
+// 	const all = useRecoilValue(todoListActiveSelector('all'));
+// 	const active = useRecoilValue(todoListActiveSelector('active'));
+// 	console.log('allactive', all, active);
+// 	const getStats = useRecoilCallback(
+// 		({ snapshot }) => {
+// 			const stats = snapshot.getLoadable(todoListStatsSelector).getValue();
+// 			return () => stats;
+// 		},
+// 		[]
+// 	);
+// 	return getStats();
+// };

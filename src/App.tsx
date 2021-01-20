@@ -1,10 +1,10 @@
 import React from 'react';
-import { RecoilRoot } from 'recoil';
 import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import styles from './App.module.css';
 import DemoCounter from './pages/DemoCounter/';
 import DemoTodo from './pages/DemoTodo/';
+import { RecoilRoot } from 'recoil';
 
 const App = () => {
 	return (
