@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Button, InputNumber, List, Statistic } from 'antd';
+import { Button, InputNumber, Statistic } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import styles from './index.module.css';
 
@@ -8,7 +8,9 @@ const RecoilCounter = () => {
 
 	const numQueryFactory = (x: number) => x * num;
 
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const numX2 = useMemo(() => numQueryFactory(2), [num]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	const numX4 = useMemo(() => numQueryFactory(4), [num]);
 	const numAbs = useMemo(() => Math.abs(num), [num]);
 	const increment = () => setNum(num => num + 1);

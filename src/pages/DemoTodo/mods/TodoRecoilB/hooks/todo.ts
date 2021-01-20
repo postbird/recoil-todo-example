@@ -1,8 +1,6 @@
-import { todoListActiveSelector } from './../atoms/index';
 import { v4 as uuidv4 } from 'uuid';
 import { useRecoilState, useRecoilCallback, useRecoilValue } from 'recoil';
 import { todoIdsState, todoIdState, TodoId, todoListStatsSelector, ITodo } from '../atoms';
-import { useMemo } from 'react';
 
 const generateTodo = (title: string, id: TodoId): ITodo => ({
 	id,
