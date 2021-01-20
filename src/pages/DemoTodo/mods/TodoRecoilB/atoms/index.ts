@@ -44,7 +44,6 @@ export const todoListStatsSelector = selector({
 			all,
 			active,
 			completed,
-			percent: all === 0 ? 0 : `${Math.floor((completed / all) * 100)}%`,
 		};
 	},
 });

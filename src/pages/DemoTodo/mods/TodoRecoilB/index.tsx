@@ -22,7 +22,7 @@ const TodoRecoil = () => {
 };
 
 const ListStats: React.FC = () => {
-	const { all, active, completed, percent } = useTodoStats();
+	const { all, active, completed } = useTodoStats();
 
 	const renderNum = (label: string, num: number | string) => (
 		<span className={styles.statsItem}>
@@ -36,7 +36,6 @@ const ListStats: React.FC = () => {
 			{renderNum('ALL', all)}
 			{renderNum('ACTIVE', active)}
 			{renderNum('COMPLETED', completed)}
-			{renderNum('PERCENT', percent)}
 		</div>
 	);
 };
