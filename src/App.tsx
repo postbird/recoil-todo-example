@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 // import styles from './App.module.css';
+import Home from './pages/Home';
 import DemoCounter from './pages/DemoCounter/';
 import DemoTodo from './pages/DemoTodo/';
 import { RecoilRoot } from 'recoil';
@@ -40,7 +41,9 @@ const App = () => {
 							<Route path="/recoilTodo" exact>
 								<DemoTodo />
 							</Route>
-							<Route path="/" exact></Route>
+							<Route path="/" exact>
+								<Home />
+							</Route>
 						</Switch>
 					</Layout.Content>
 				</Layout>

@@ -1,12 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import {
-	useRecoilState,
-	useRecoilCallback,
-	useRecoilValue,
-	useRecoilTransactionObserver_UNSTABLE,
-	useSetRecoilState,
-} from 'recoil';
-import { todoIdsState, todoIdState, TodoId, todoStatsState, ITodo } from '../atoms';
+import { useRecoilState, useRecoilCallback, useRecoilValue } from 'recoil';
+import { todoIdsState, todoIdState, TodoId, todoListStatsSelector, ITodo } from '../atoms';
 
 const generateTodo = (title: string, id: TodoId): ITodo => ({
 	id,
@@ -45,25 +39,20 @@ export const useTodoIds = () => {
 	return useRecoilValue(todoIdsState);
 };
 
-export const useStatsObserver = () => {
-	const [stats, setStats] = useRecoilState(todoStatsState);
-	useRecoilTransactionObserver_UNSTABLE(({ snapshot }) => {
-		const ids = snapshot.getLoadable(todoIdsState).getValue();
-		const todos = ids.map(id => snapshot.getLoadable(todoIdState(id)).getValue());
-		const active = todos.filter(todo => !todo.completed).length;
-		const all = ids.length;
-		if (stats.all !== all || stats.active !== active) {
-			setStats({
-				all,
-				active,
-				completed: all - active,
-			});
-		}
-		return null;
-	});
+export const useTodoStats = () => {
+	return useRecoilValue(todoListStatsSelector);
 };
 
-export const useTodoStats = () => {
-	useStatsObserver(); // ! observer in useTodoStats hook
-	return useRecoilValue(todoStatsState);
-};
+// export const useTodoStats = () => {
+// 	const all = useRecoilValue(todoListActiveSelector('all'));
+// 	const active = useRecoilValue(todoListActiveSelector('active'));
+// 	console.log('allactive', all, active);
+// 	const getStats = useRecoilCallback(
+// 		({ snapshot }) => {
+// 			const stats = snapshot.getLoadable(todoListStatsSelector).getValue();
+// 			return () => stats;
+// 		},
+// 		[]
+// 	);
+// 	return getStats();
+// };

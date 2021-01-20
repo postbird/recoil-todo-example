@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { List, Badge } from 'antd';
 import styles from './index.module.css';
-import { useTodoStats, useTodoIds, useStatsObserver } from './hooks/todo';
+import { useTodoStats, useTodoIds } from './hooks/todo';
 import TodoAdd from './mods/TodoAdd';
 import TodoItem from './mods/TodoItem';
 
@@ -22,8 +22,7 @@ const TodoRecoil = () => {
 };
 
 const ListStats: React.FC = () => {
-	// useStatsObserver(); // ! useObserver in ReactComponent JSX
-	const { all, active, completed } = useTodoStats();
+	const stats = useTodoStats();
 
 	const renderNum = (label: string, num: number | string) => (
 		<span className={styles.statsItem}>
@@ -34,9 +33,9 @@ const ListStats: React.FC = () => {
 
 	return (
 		<div className={styles.statsWrap}>
-			{renderNum('ALL', all)}
-			{renderNum('ACTIVE', active)}
-			{renderNum('COMPLETED', completed)}
+			{/* {renderNum('ALL', stats.get('all') as number)} */}
+			{renderNum('ACTIVE', stats.get('active') as number)}
+			{/* {renderNum('COMPLETED', stats.completed)} */}
 		</div>
 	);
 };
