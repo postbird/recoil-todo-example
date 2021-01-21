@@ -24,18 +24,7 @@ export const todoIdState = atomFamily({
 	default: (null as unknown) as RecoilState<ITodo>,
 });
 
-export const todoListActiveSelector = selectorFamily({
-	key: uuidv4(),
-	get: type => ({ get }) => {
-		const ids = get(todoIdsState);
-		if (type === 'all') {
-			return ids.length;
-		}
-		return ids.filter(id => !get(todoIdState(id)).completed).length;
-	},
-});
-const arr: IMutableMap<string, number>[] = [];
-const immutableStats = IMutableMap({ all: 0, active: 0, completed: 0 });
+let immutableStats = IMutableMap({ all: 0, active: 0, completed: 0 });
 
 export const todoListStatsSelector = selector({
 	key: uuidv4(),
@@ -43,17 +32,10 @@ export const todoListStatsSelector = selector({
 		const ids = get(todoIdsState);
 		const all = ids.length;
 		const active = ids.filter(id => !get(todoIdState(id)).completed).length;
-		arr.push(immutableStats);
-		console.log(
-			'immutableStats',
-			arr.map(item => item === immutableStats)
-		);
-		if (all === immutableStats.get('all') || active === immutableStats.get('active')) {
+		if (active === immutableStats.get('active')) {
 			return immutableStats;
 		}
-		immutableStats.set('all', all);
-		immutableStats.set('active', active);
-		immutableStats.set('completed', all - active);
+		immutableStats = IMutableMap({ all, active, completed: all - active });
 		return immutableStats;
 	},
 });
