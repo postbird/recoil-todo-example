@@ -46,7 +46,7 @@ const App = () => {
 								<DemoTodo />
 							</Route>
 							<Route path="/canvas" exact>
-								<DemoCounter />
+								<DemoCanvas />
 							</Route>
 							<Route path="/" exact>
 								<Home />
