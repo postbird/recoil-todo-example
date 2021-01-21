@@ -5,6 +5,7 @@ import { Layout, Menu } from 'antd';
 import Home from './pages/Home';
 import DemoCounter from './pages/DemoCounter/';
 import DemoTodo from './pages/DemoTodo/';
+import DemoCanvas from './pages/DemoCanvas/';
 import { RecoilRoot } from 'recoil';
 
 const App = () => {
@@ -27,6 +28,9 @@ const App = () => {
 							<Menu.Item key="recoilTodo">
 								<Link to="/recoilTodo">Demo Todo</Link>
 							</Menu.Item>
+							<Menu.Item key="canvas">
+								<Link to="/canvas">Demo Canvas</Link>
+							</Menu.Item>
 						</Menu>
 					</Layout.Sider>
 					<Layout.Content
@@ -40,6 +44,9 @@ const App = () => {
 							</Route>
 							<Route path="/recoilTodo" exact>
 								<DemoTodo />
+							</Route>
+							<Route path="/canvas" exact>
+								<DemoCounter />
 							</Route>
 							<Route path="/" exact>
 								<Home />
