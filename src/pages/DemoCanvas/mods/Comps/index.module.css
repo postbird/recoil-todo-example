@@ -21,9 +21,3 @@
 	height: 80px;
 	background-color: #ccc;
 }
-
-.canvasWrap {
-	height: 100vh;
-	overflow: hidden;
-	background-color: #fff;
-}
