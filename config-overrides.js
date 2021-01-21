@@ -6,6 +6,7 @@ module.exports = override(
 		alias: {
 			react: path.resolve(__dirname, 'node_modules/react'),
 			'react-dom': path.resolve(__dirname, 'node_modules/react-dom'),
+			recoil: path.resolve(__dirname, 'src/modules/recoil'),
 		},
 	})
 );
