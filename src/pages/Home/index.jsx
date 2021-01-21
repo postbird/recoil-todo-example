@@ -16,10 +16,18 @@ const todosState = atom({
 const todoStats = selector({
 	key: uuidv4(),
 	get: ({ get }) => {
+		// ! avoid side-effects in selector
 		statsList.push(immutableStats);
 		// get but return the same immutableStats
+		console.log('immutableStats', immutableStats);
 		const todos = get(todosState);
-
+		const active = todos.filter(todo => !todo.completed).length;
+		if (active === immutableStats.get('active')) {
+			return immutableStats;
+		}
+		immutableStats = immutableStats.set('all', todos.length);
+		immutableStats = immutableStats.set('active', active);
+		immutableStats = immutableStats.set('completed', todos.length - active);
 		return immutableStats;
 	},
 });

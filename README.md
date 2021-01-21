@@ -8,6 +8,12 @@
 
 ## atom atomFamily select selectorFamiy
 
+## selector
+
+```jsx
+gkx.setPass('recoil_suppress_rerender_in_callback');
+```
+
 ## snapshot
 
 ## useRecoilCallback
