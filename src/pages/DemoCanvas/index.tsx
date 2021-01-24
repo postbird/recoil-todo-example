@@ -4,9 +4,14 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import Canvas from './mods/Canvas';
 import Comps from './mods/Comps';
+import { useMaterialList } from './hooks/index';
 // import styles from './index.module.css';
 
 const DemoCanvas: React.FC = () => {
+	const [list] = useMaterialList();
+
+	console.log('list', list);
+
 	return (
 		<DndProvider backend={HTML5Backend}>
 			<Row>

@@ -9,6 +9,7 @@ import {
 } from 'react-dnd';
 import styles from './index.module.css';
 import { ItemTypes } from '../../ItemTypes';
+import { useAddCanvasItem } from '../../hooks';
 
 type TypeUseDragReturn = [
 	{ isDragging: boolean },
@@ -17,11 +18,14 @@ type TypeUseDragReturn = [
 ];
 
 const Comps: React.FC = () => {
+	const addTodo = useAddCanvasItem();
 	const [{ isDragging }, drag]: TypeUseDragReturn = useDrag({
 		item: { type: ItemTypes.BOX },
 		end: (item, monitor: DragSourceMonitor) => {
+			console.log('item,item', item);
 			const dropResult = monitor.getDropResult();
 			if (item && dropResult) {
+				addTodo();
 			}
 		},
 		collect: monitor => ({

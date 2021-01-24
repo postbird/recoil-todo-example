@@ -12,7 +12,7 @@ export interface IMaterial {
 
 export type MaterialIdList = string[];
 
-export const ids = atom({
+export const idListState = atom({
 	key: uuidv4(),
 	default: [] as string[],
 });
