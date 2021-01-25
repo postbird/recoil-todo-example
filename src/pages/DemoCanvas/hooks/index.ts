@@ -1,12 +1,13 @@
-import { useRecoilCallback, useRecoilState } from 'recoil';
+import { useRecoilCallback, useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
-import { IMaterial, idListState, materialState } from '../atoms';
+import { IMaterial, idListState, materialState, activeMaterialIdState } from '../atoms';
 
-const generateCanvasItem = (id: string): IMaterial => {
+const generateCanvasItem = (id: string, opts: { x?: number; y?: number }): IMaterial => {
+	const { x = 0, y = 0 } = opts;
 	return {
 		id,
-		x: 0,
-		y: 0,
+		x,
+		y,
 		backgroundColor: '#CCC',
 		width: 100,
 		height: 80,
@@ -19,8 +20,8 @@ export const useAddCanvasItem = () => {
 	return useRecoilCallback(
 		({ set }) => {
 			const id = uuidv4();
-			return () => {
-				set(materialState(id), generateCanvasItem(id));
+			return (x?: number, y?: number) => {
+				set(materialState(id), generateCanvasItem(id, { x, y }));
 				setIds(ids => [...ids, id]);
 			};
 		},
@@ -50,3 +51,15 @@ export const useMaterial = (id: string) => {
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 export const useMaterialList = () => useRecoilState(idListState);
+
+export const useSetActiveMaterial = () => {
+	const set = useSetRecoilState(activeMaterialIdState);
+	return (id: string) => {
+		set(id);
+	};
+};
+
+export const useActiveMaterial = () => {
+	const id = useRecoilValue(activeMaterialIdState);
+	return useMaterial(id);
+};

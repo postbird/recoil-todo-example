@@ -1,44 +1,49 @@
-import React from 'react';
-import { useDrop, DropTargetMonitor, XYCoord } from 'react-dnd';
+import React, { DragEventHandler, MutableRefObject, useCallback, useRef } from 'react';
 import styles from './index.module.css';
-import { ItemTypes } from '../../ItemTypes';
-import { useMaterialList } from '../../hooks';
+import { useMaterialList, useAddCanvasItem } from '../../hooks';
 import Material from '../Mateiral';
 
 const DemoCanvas: React.FC = () => {
+	const addTodo = useAddCanvasItem();
 	const [list] = useMaterialList();
+	const refCanvas: MutableRefObject<HTMLDivElement> = useRef(
+		null as unknown
+	) as MutableRefObject<HTMLDivElement>;
 
-	const handleDroped = (item: any, monitor: DropTargetMonitor) => {
-		const delta = monitor.getDifferenceFromInitialOffset() as XYCoord;
-		console.log('delta', delta);
-		const x = Math.round(item.x + delta.x);
-		const y = Math.round(item.y + delta.y);
-		console.log('handleDroped', {
-			id: item.id,
-			x,
-			y,
-		});
-		// moveBox(item.id, left, top);
+	const getCanvasXY = useCallback(() => {
+		if (refCanvas.current) {
+			return {
+				x: refCanvas.current.getBoundingClientRect().x,
+				y: refCanvas.current.getBoundingClientRect().y,
+			};
+		}
 		return {
-			id: item.id,
-			x,
-			y,
+			x: 0,
+			y: 0,
 		};
+	}, []);
+
+	const handleOnDrop: DragEventHandler = ev => {
+		ev.preventDefault();
+		ev.dataTransfer.dropEffect = 'move';
+		const canvas = getCanvasXY();
+		const x = ev.pageX - canvas.x;
+		const y = ev.pageY - canvas.y;
+		addTodo(x, y);
 	};
 
-	const [{ canDrop, isOver }, drop] = useDrop({
-		accept: ItemTypes.BOX,
-		drop: handleDroped,
-		collect: monitor => ({
-			isOver: monitor.isOver(),
-			canDrop: monitor.canDrop(),
-		}),
-	});
+	const handleOnDragOver: DragEventHandler<HTMLElement> = ev => {
+		ev.preventDefault();
+	};
 
 	return (
-		<div className={styles.canvasWrap} ref={drop}>
+		<div
+			ref={refCanvas}
+			className={styles.canvasWrap}
+			onDrop={handleOnDrop}
+			onDragOver={handleOnDragOver}>
 			{list.map(id => (
-				<Material key={id} id={id} />
+				<Material key={id} id={id} getCanvasXY={getCanvasXY} />
 			))}
 		</div>
 	);

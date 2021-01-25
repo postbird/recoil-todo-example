@@ -21,3 +21,8 @@ export const materialState = atomFamily({
 	key: uuidv4(),
 	default: (null as unknown) as IMaterial,
 });
+
+export const activeMaterialIdState = atom({
+	key: uuidv4(),
+	default: (null as unknown) as string,
+});

@@ -4,7 +4,6 @@ import {
 	useRecoilCallback,
 	useRecoilValue,
 	useRecoilTransactionObserver_UNSTABLE,
-	useSetRecoilState,
 } from 'recoil';
 import { todoIdsState, todoIdState, TodoId, todoStatsState, ITodo } from '../atoms';
 

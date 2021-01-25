@@ -1,44 +1,26 @@
-import React from 'react';
+import React, { DragEventHandler } from 'react';
 import { AreaChartOutlined } from '@ant-design/icons';
-import {
-	useDrag,
-	DragSourceMonitor,
-	DragElementWrapper,
-	DragSourceOptions,
-	DragPreviewOptions,
-} from 'react-dnd';
 import styles from './index.module.css';
-import { ItemTypes } from '../../ItemTypes';
-import { useAddCanvasItem } from '../../hooks';
-
-type TypeUseDragReturn = [
-	{ isDragging: boolean },
-	DragElementWrapper<DragSourceOptions>,
-	DragElementWrapper<DragPreviewOptions>
-];
 
 const Comps: React.FC = () => {
-	const addTodo = useAddCanvasItem();
-	const [{ isDragging }, drag]: TypeUseDragReturn = useDrag({
-		item: { type: ItemTypes.BOX },
-		end: (item, monitor: DragSourceMonitor) => {
-			console.log('item,item', item);
-			const dropResult = monitor.getDropResult();
-			if (item && dropResult) {
-				addTodo();
-			}
-		},
-		collect: monitor => ({
-			isDragging: monitor.isDragging(),
-		}),
-	});
+	const handleOnDragStart: DragEventHandler<HTMLElement> = ev => {
+		console.log(ev);
+		ev.dataTransfer.setData('type', 'div');
+		ev.dataTransfer.effectAllowed = 'move';
+	};
 
-	const opacity = isDragging ? 0.4 : 1;
+	const handleOnDragEnd: DragEventHandler<HTMLElement> = ev => {
+		ev.preventDefault();
+	};
 
 	return (
 		<div className={styles.side}>
 			<div className={styles.topSide}>
-				<div className={styles.mItem} ref={drag}>
+				<div
+					className={styles.mItem}
+					draggable
+					onDragStart={handleOnDragStart}
+					onDragEnd={handleOnDragEnd}>
 					<AreaChartOutlined style={{ fontSize: 40 }} />
 				</div>
 			</div>
