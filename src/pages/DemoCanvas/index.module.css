@@ -13,6 +13,13 @@
 	padding-top: 20px;
 }
 
+.topSide {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 50px;
+}
+
 .mItem {
 	display: flex;
 	align-items: center;

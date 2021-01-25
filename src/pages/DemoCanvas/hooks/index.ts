@@ -61,5 +61,5 @@ export const useSetActiveMaterial = () => {
 
 export const useActiveMaterial = () => {
 	const id = useRecoilValue(activeMaterialIdState);
-	return useMaterial(id);
+	return useMaterial(id).material;
 };

@@ -1,11 +1,10 @@
 import React from 'react';
 import { Row, Col } from 'antd';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import Canvas from './mods/Canvas';
 import Comps from './mods/Comps';
+import SideInfo from './mods/SideInfo';
 import { useMaterialList } from './hooks/index';
-// import styles from './index.module.css';
+import styles from './index.module.css';
 
 const DemoCanvas: React.FC = () => {
 	const [list] = useMaterialList();
@@ -13,17 +12,22 @@ const DemoCanvas: React.FC = () => {
 	console.log('list', list);
 
 	return (
-		<DndProvider backend={HTML5Backend}>
-			<Row>
-				<Col span={4}>
-					<Comps />
-				</Col>
-				<Col span={16}>
-					<Canvas />
-				</Col>
-				<Col span={4}></Col>
-			</Row>
-		</DndProvider>
+		<Row>
+			<Col span={4}>
+				<div className={styles.side}>
+					<div className={styles.topSide}>
+						<Comps />
+					</div>
+					<div className={styles.topSide}>
+						<SideInfo />
+					</div>
+				</div>
+			</Col>
+			<Col span={16}>
+				<Canvas />
+			</Col>
+			<Col span={4}></Col>
+		</Row>
 	);
 };
 

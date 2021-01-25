@@ -12,18 +12,13 @@ const Comps: React.FC = () => {
 	const handleOnDragEnd: DragEventHandler<HTMLElement> = ev => {
 		ev.preventDefault();
 	};
-
 	return (
-		<div className={styles.side}>
-			<div className={styles.topSide}>
-				<div
-					className={styles.mItem}
-					draggable
-					onDragStart={handleOnDragStart}
-					onDragEnd={handleOnDragEnd}>
-					<AreaChartOutlined style={{ fontSize: 40 }} />
-				</div>
-			</div>
+		<div
+			className={styles.mItem}
+			draggable
+			onDragStart={handleOnDragStart}
+			onDragEnd={handleOnDragEnd}>
+			<AreaChartOutlined style={{ fontSize: 40 }} />
 		</div>
 	);
 };

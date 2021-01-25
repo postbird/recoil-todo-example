@@ -8,6 +8,7 @@ export interface IMaterial {
 	x: number;
 	y: number;
 	backgroundColor: string;
+	[key: string]: any;
 }
 
 export type MaterialIdList = string[];

@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
+import 'antd/dist/antd.css';
 // import styles from './App.module.css';
 import Home from './pages/Home';
 import DemoCounter from './pages/DemoCounter/';
