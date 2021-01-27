@@ -1,4 +1,10 @@
-import { useRecoilCallback, useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
+import {
+	useRecoilCallback,
+	useRecoilState,
+	useSetRecoilState,
+	useRecoilValue,
+	SetterOrUpdater,
+} from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 import { IMaterial, idListState, materialState, activeMaterialIdState } from '../atoms';
 
@@ -59,7 +65,8 @@ export const useSetActiveMaterial = () => {
 	};
 };
 
-export const useActiveMaterial = () => {
+export const useActiveMaterial = (): [IMaterial, SetterOrUpdater<IMaterial>] => {
 	const id = useRecoilValue(activeMaterialIdState);
-	return useMaterial(id).material;
+	const { material, setMaterial } = useMaterial(id);
+	return [material, setMaterial];
 };

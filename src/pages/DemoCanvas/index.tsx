@@ -3,6 +3,7 @@ import { Row, Col } from 'antd';
 import Canvas from './mods/Canvas';
 import Comps from './mods/Comps';
 import SideInfo from './mods/SideInfo';
+import Setter from './mods/Setter';
 import { useMaterialList } from './hooks/index';
 import styles from './index.module.css';
 
@@ -23,10 +24,13 @@ const DemoCanvas: React.FC = () => {
 					</div>
 				</div>
 			</Col>
-			<Col span={16}>
+			<Col span={14}>
 				<Canvas />
 			</Col>
-			<Col span={4}></Col>
+			<Col span={5}>
+				<Setter />
+			</Col>
+			<Col span={1} />
 		</Row>
 	);
 };

@@ -3,7 +3,7 @@ import { List } from 'antd';
 import { useActiveMaterial } from '../../hooks';
 
 const Material: React.FC<{}> = () => {
-	const material = useActiveMaterial();
+	const [material] = useActiveMaterial();
 
 	if (!material) {
 		return null;
