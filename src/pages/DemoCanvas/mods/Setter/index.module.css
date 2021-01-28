@@ -1,0 +1,8 @@
+.colorBtn {
+	color: white;
+	border: none;
+	outline: none;
+	padding: 0.5em 0.75em;
+	cursor: pointer;
+	border-radius: 0.1em;
+}

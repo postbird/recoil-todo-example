@@ -1,16 +1,26 @@
-import React, { ChangeEventHandler, useEffect } from 'react';
+import React, { ChangeEventHandler, MutableRefObject, useEffect, useRef } from 'react';
 import { List, Form, Input } from 'antd';
 import { useActiveMaterial } from '../../hooks';
-import '@simonwep/pickr/dist/themes/nano.min.css';
 import Pickr from '@simonwep/pickr';
+import '@simonwep/pickr/dist/themes/classic.min.css';
+import styles from './index.module.css';
 
 const Material: React.FC<{}> = () => {
 	const [material, setMateiral] = useActiveMaterial();
-
+	const refElement = useRef(null as unknown) as MutableRefObject<HTMLInputElement>;
+	const refPicker = useRef(null as unknown) as MutableRefObject<Pickr>;
 	useEffect(() => {
-		const pickr = Pickr.create({
-			el: '#picker',
-			theme: 'nano', // or 'monolith', or 'nano'
+		const inputElement = refElement.current;
+
+		if (!inputElement) {
+			return;
+		}
+
+		refPicker.current = new Pickr({
+			el: inputElement,
+			useAsButton: true,
+			default: '#42445A',
+			theme: 'classic',
 
 			swatches: [
 				'rgba(244, 67, 54, 1)',
@@ -30,35 +40,32 @@ const Material: React.FC<{}> = () => {
 			],
 
 			components: {
-				// Main components
 				preview: true,
 				opacity: true,
 				hue: true,
 
-				// Input / output Options
 				interaction: {
 					hex: true,
 					rgba: true,
-					hsla: true,
 					hsva: true,
-					cmyk: true,
 					input: true,
-					clear: true,
 					save: true,
 				},
 			},
-		});
-	}, []);
+		})
+			.on('change', (color: any) => {
+				const backgroundColor = color.toRGBA().toString(0);
+				inputElement.value = backgroundColor;
+				setMateiral(material => ({ ...material, backgroundColor }));
+			})
+			.on('save', () => {
+				refPicker.current.hide();
+			});
+	}, [material, setMateiral]);
 
 	if (!material) {
 		return null;
 	}
-
-	const handleChange = (type: string): ChangeEventHandler => ev => {};
-
-	const handleColorChange = (color: string) => {
-		setMateiral({ ...material, backgroundColor: color });
-	};
 
 	return (
 		<List
@@ -71,32 +78,15 @@ const Material: React.FC<{}> = () => {
 				</div>
 			}
 			bordered>
-			<Form layout="inline">
+			<Form layout="vertical">
 				<List.Item>
 					<Form.Item label="Background Color">
-						<div id="container">
-							<input id="picker" />
-						</div>
-					</Form.Item>
-				</List.Item>
-				<List.Item>
-					<Form.Item label="Position x">
-						<Input onChange={handleChange('x')} type="number" />
-					</Form.Item>
-				</List.Item>
-				<List.Item>
-					<Form.Item label="Position y">
-						<Input onChange={handleChange('y')} type="number" />
-					</Form.Item>
-				</List.Item>
-				<List.Item>
-					<Form.Item label="Width">
-						<Input onChange={handleChange('width')} type="number" min={50} />
-					</Form.Item>
-				</List.Item>
-				<List.Item>
-					<Form.Item label="Height">
-						<Input onChange={handleChange('height')} type="number" min={50} />
+						<input
+							ref={refElement}
+							className={styles.colorBtn}
+							style={{ backgroundColor: material.backgroundColor }}
+							defaultValue={material.backgroundColor}
+						/>
 					</Form.Item>
 				</List.Item>
 			</Form>

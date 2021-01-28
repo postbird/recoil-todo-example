@@ -9,29 +9,36 @@ const Material: React.FC<{}> = () => {
 		return null;
 	}
 
-	const renderData = Object.keys(material)
-		.filter(key => key !== 'id')
-		.map((key: string) => ({ key, value: material[key] }));
-
 	return (
 		<List
-			style={{ backgroundColor: '#FFF' }}
+			style={{ backgroundColor: '#FFF', width: '100%' }}
 			size="small"
 			header={
 				<div>
-					<p>Active Material</p>
-					<p>{material.id}</p>
+					<span>Active Material</span>
 				</div>
 			}
-			bordered
-			dataSource={renderData}
-			renderItem={item => (
-				<List.Item>
-					<span>{item.key}: </span>
-					<span>{item.value}</span>
-				</List.Item>
-			)}
-		/>
+			bordered>
+			<List.Item>
+				<span>x:</span>
+				<span>{material.x}</span>
+			</List.Item>
+			<List.Item>
+				<span>y:</span>
+				<span>{material.y}</span>
+			</List.Item>
+			<List.Item>
+				<span>width:</span>
+				<span>{material.width}</span>
+			</List.Item>
+			<List.Item>
+				<span>height:</span>
+				<span>{material.height}</span>
+			</List.Item>
+			<List.Item>
+				<div style={{ backgroundColor: material.backgroundColor, width: '100%', height: '30px' }} />
+			</List.Item>
+		</List>
 	);
 };
 
