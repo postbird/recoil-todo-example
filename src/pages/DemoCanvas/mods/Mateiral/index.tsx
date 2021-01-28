@@ -9,10 +9,11 @@ const Material: React.FC<{
 		y: number;
 	};
 }> = ({ id, getCanvasXY }) => {
-	const { material, setPosition } = useMaterial(id);
+	const { material, setPosition, setMaterial } = useMaterial(id);
 	const setActiveMaterial = useSetActiveMaterial();
 	const refMaterial = useRef(null as unknown) as MutableRefObject<HTMLDivElement>;
 	const refMouseDown = useRef(false);
+	const refMaterialDrag = useRef(null as unknown) as MutableRefObject<HTMLDivElement>;
 
 	const handleClick = () => {
 		setActiveMaterial(id);
@@ -32,6 +33,40 @@ const Material: React.FC<{
 	};
 	const handleMouseUp: MouseEventHandler = ev => {
 		refMouseDown.current = false;
+	};
+
+	const handleDragMouseDown: MouseEventHandler = ev => {
+		ev.stopPropagation();
+		let disX = 0; //鼠标按下时光标的X值
+		let disY = 0; //鼠标按下时光标的Y值
+		let disW = 0; //拖拽前div的宽
+		let disH = 0; // 拖拽前div的高
+		disX = ev.clientX; // 获取鼠标按下时光标x的值
+		disY = ev.clientY; // 获取鼠标按下时光标Y的值
+		disW = refMaterial.current.offsetWidth; // 获取拖拽前div的宽
+		disH = refMaterial.current.offsetHeight; // 获取拖拽前div的高
+		document.onmousemove = ev => {
+			//拖拽时为了对宽和高 限制一下范围，定义两个变量
+			let W = ev.clientX - disX + disW;
+			let H = ev.clientY - disY + disH;
+			if (W < 100) {
+				W = 100;
+			}
+			if (W > 800) {
+				W = 800;
+			}
+			if (H < 100) {
+				H = 100;
+			}
+			if (H > 500) {
+				H = 500;
+			}
+			setMaterial(material => ({ ...material, width: W, height: H }));
+		};
+		document.onmouseup = function () {
+			document.onmousemove = null;
+			document.onmouseup = null;
+		};
 	};
 
 	const style = useMemo(() => {
@@ -54,8 +89,13 @@ const Material: React.FC<{
 			onClick={handleClick}
 			onMouseDown={handleMouseDown}
 			onMouseMove={handleMouseMove}
-			onMouseUp={handleMouseUp}
-		/>
+			onMouseUp={handleMouseUp}>
+			<div
+				ref={refMaterialDrag}
+				className={styles.materialDrag}
+				onMouseDown={handleDragMouseDown}
+			/>
+		</div>
 	);
 };
 
