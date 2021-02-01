@@ -4,7 +4,6 @@ import styles from './index.module.css';
 
 const Comps: React.FC = () => {
 	const handleOnDragStart: DragEventHandler<HTMLElement> = ev => {
-		console.log(ev);
 		ev.dataTransfer.setData('type', 'div');
 		ev.dataTransfer.effectAllowed = 'move';
 	};

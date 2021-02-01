@@ -8,6 +8,7 @@ import DemoCounter from './pages/DemoCounter/';
 import DemoTodo from './pages/DemoTodo/';
 import DemoCanvas from './pages/DemoCanvas/';
 import DemoCanvas2 from './pages/DemoCanvas2/';
+import DemoCanvasEffect from './pages/DemoCanvasEffect/';
 import { RecoilRoot } from 'recoil';
 
 const App = () => {
@@ -36,6 +37,9 @@ const App = () => {
 							<Menu.Item key="canvas2">
 								<Link to="/canvas2">Demo Canvas2</Link>
 							</Menu.Item>
+							<Menu.Item key="canvaseffect">
+								<Link to="/canvaseffect">Demo Canvas atomEffect</Link>
+							</Menu.Item>
 						</Menu>
 					</Layout.Sider>
 					<Layout.Content
@@ -49,6 +53,9 @@ const App = () => {
 							</Route>
 							<Route path="/recoilTodo" exact>
 								<DemoTodo />
+							</Route>
+							<Route path="/canvaseffect" exact>
+								<DemoCanvasEffect />
 							</Route>
 							<Route path="/canvas2" exact>
 								<DemoCanvas2 />

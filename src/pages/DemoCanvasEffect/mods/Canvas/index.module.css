@@ -1,0 +1,7 @@
+.canvasWrap {
+	position: relative;
+	height: 100vh;
+	overflow: hidden;
+	background-color: #fff;
+	transition: background-color linear 0.1s;
+}
