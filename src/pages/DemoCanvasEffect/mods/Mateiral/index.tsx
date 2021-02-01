@@ -8,7 +8,8 @@ const Material: React.FC<{
 		x: number;
 		y: number;
 	};
-}> = ({ id, getCanvasXY }) => {
+	isPreview: boolean;
+}> = ({ id, getCanvasXY, isPreview }) => {
 	const { material, setPosition, setMaterial } = useMaterial(id);
 	const setActiveMaterial = useSetActiveMaterial();
 	const refMaterial = useRef(null as unknown) as MutableRefObject<HTMLDivElement>;
@@ -16,13 +17,22 @@ const Material: React.FC<{
 	const refMaterialDrag = useRef(null as unknown) as MutableRefObject<HTMLDivElement>;
 
 	const handleClick = () => {
+		if (isPreview) {
+			return null;
+		}
 		setActiveMaterial(id);
 	};
 
 	const handleMouseDown: MouseEventHandler = ev => {
+		if (isPreview) {
+			return null;
+		}
 		refMouseDown.current = true;
 	};
 	const handleMouseMove: MouseEventHandler = ev => {
+		if (isPreview) {
+			return null;
+		}
 		if (!refMouseDown.current) {
 			return null;
 		}
@@ -32,10 +42,16 @@ const Material: React.FC<{
 		setPosition(x, y);
 	};
 	const handleMouseUp: MouseEventHandler = ev => {
+		if (isPreview) {
+			return null;
+		}
 		refMouseDown.current = false;
 	};
 
 	const handleDragMouseDown: MouseEventHandler = ev => {
+		if (isPreview) {
+			return null;
+		}
 		ev.stopPropagation();
 		let disX = 0; //鼠标按下时光标的X值
 		let disY = 0; //鼠标按下时光标的Y值
@@ -94,11 +110,13 @@ const Material: React.FC<{
 			onMouseDown={handleMouseDown}
 			onMouseMove={handleMouseMove}
 			onMouseUp={handleMouseUp}>
-			<div
-				ref={refMaterialDrag}
-				className={styles.materialDrag}
-				onMouseDown={handleDragMouseDown}
-			/>
+			{isPreview ? null : (
+				<div
+					ref={refMaterialDrag}
+					className={styles.materialDrag}
+					onMouseDown={handleDragMouseDown}
+				/>
+			)}
 		</div>
 	);
 };

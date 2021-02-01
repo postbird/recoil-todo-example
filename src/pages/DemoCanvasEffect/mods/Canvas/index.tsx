@@ -3,7 +3,7 @@ import styles from './index.module.css';
 import { useMaterialList, useAddCanvasItem } from '../../hooks';
 import Material from '../Mateiral';
 
-const DemoCanvas: React.FC = () => {
+const DemoCanvas: React.FC<{ isPreview: boolean }> = ({ isPreview }) => {
 	const addTodo = useAddCanvasItem();
 	const [list] = useMaterialList();
 	const refCanvas: MutableRefObject<HTMLDivElement> = useRef(
@@ -43,7 +43,7 @@ const DemoCanvas: React.FC = () => {
 			onDrop={handleOnDrop}
 			onDragOver={handleOnDragOver}>
 			{list.map(id => (
-				<Material key={id} id={id} getCanvasXY={getCanvasXY} />
+				<Material key={id} id={id} getCanvasXY={getCanvasXY} isPreview={isPreview} />
 			))}
 		</div>
 	);

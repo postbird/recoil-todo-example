@@ -2,7 +2,7 @@
 import { atom, atomFamily, selector } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 
-const STORE_KEY = '__DemoCanvasEffect';
+export const STORE_KEY = '__DemoCanvasEffect';
 
 export interface IMaterial {
 	id: string;

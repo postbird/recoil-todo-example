@@ -4,9 +4,10 @@ import {
 	useSetRecoilState,
 	useRecoilValue,
 	SetterOrUpdater,
+	useResetRecoilState,
 } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
-import { IMaterial, idListState, materialState, activeMaterialIdState } from '../atoms';
+import { IMaterial, idListState, materialState, activeMaterialIdState, STORE_KEY } from '../atoms';
 
 const generateCanvasItem = (id: string, opts: { x?: number; y?: number }): IMaterial => {
 	const { x = 0, y = 0 } = opts;
@@ -69,4 +70,16 @@ export const useActiveMaterial = (): [IMaterial, SetterOrUpdater<IMaterial>] => 
 	const id = useRecoilValue(activeMaterialIdState);
 	const { material, setMaterial } = useMaterial(id);
 	return [material, setMaterial];
+};
+
+export const useResetList = () => {
+	const resetList = useResetRecoilState(idListState);
+	const list = useRecoilValue(idListState);
+	return () => {
+		list.forEach(id => {
+			localStorage.removeItem(`${STORE_KEY}_material_${id}`);
+		});
+		localStorage.removeItem(`${STORE_KEY}_list`);
+		resetList();
+	};
 };
