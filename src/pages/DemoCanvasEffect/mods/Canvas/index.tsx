@@ -24,6 +24,7 @@ const DemoCanvas: React.FC<{ isPreview: boolean }> = ({ isPreview }) => {
 	}, []);
 
 	const handleOnDrop: DragEventHandler = ev => {
+		if (isPreview) return null;
 		ev.preventDefault();
 		ev.dataTransfer.dropEffect = 'move';
 		const canvas = getCanvasXY();
@@ -33,6 +34,7 @@ const DemoCanvas: React.FC<{ isPreview: boolean }> = ({ isPreview }) => {
 	};
 
 	const handleOnDragOver: DragEventHandler<HTMLElement> = ev => {
+		if (isPreview) return null;
 		ev.preventDefault();
 	};
 
