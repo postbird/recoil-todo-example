@@ -1,0 +1,13 @@
+.material {
+	position: absolute;
+	transform: translate(-50%, -50%);
+}
+
+.materialDrag {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	height: 10px;
+	width: 10px;
+	background-color: red;
+}
