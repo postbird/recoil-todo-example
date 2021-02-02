@@ -1,0 +1,25 @@
+.wrap {
+	display: flex;
+}
+
+.canvas {
+	display: flex;
+	flex: 1;
+	position: relative;
+	padding: 20px;
+}
+
+.box {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	background-color: #ccc;
+	transform: translate(-50%, -50%);
+}
+
+.setter {
+	display: flex;
+	width: 400px;
+	height: 100vh;
+	background-color: #fff;
+}
