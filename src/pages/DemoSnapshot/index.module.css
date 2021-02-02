@@ -18,8 +18,15 @@
 }
 
 .setter {
-	display: flex;
 	width: 400px;
 	height: 100vh;
+	overflow: auto;
 	background-color: #fff;
+}
+
+.setterItem {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 }
